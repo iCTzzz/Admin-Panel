@@ -13,15 +13,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { format } from "date-fns";
+import { es } from "date-fns/locale";
 import { useQueryClient } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Pagination, PaginationContent, PaginationItem, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Pagination, PaginationContent, PaginationItem } from "@/components/ui/pagination";
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Invalid email"),
-  phone: z.string().min(5, "Phone is required"),
-  company: z.string().min(2, "Company is required"),
+  name: z.string().min(2, "El nombre es requerido"),
+  email: z.string().email("Correo electrónico inválido"),
+  phone: z.string().min(5, "El teléfono es requerido"),
+  company: z.string().min(2, "La empresa es requerida"),
 });
 
 export default function Clients() {
@@ -47,13 +48,13 @@ export default function Clients() {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     createClient.mutate({ data: values }, {
       onSuccess: () => {
-        toast({ title: "Success", description: "Client created successfully" });
+        toast({ title: "Éxito", description: "Cliente creado correctamente" });
         setIsDialogOpen(false);
         form.reset();
         queryClient.invalidateQueries({ queryKey: getListClientsQueryKey({ search, page, pageSize: 10 }) });
       },
       onError: () => {
-        toast({ title: "Error", description: "Failed to create client", variant: "destructive" });
+        toast({ title: "Error", description: "No se pudo crear el cliente", variant: "destructive" });
       }
     });
   };
@@ -65,40 +66,40 @@ export default function Clients() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
               <Users className="h-8 w-8 text-primary" />
-              Clients Directory
+              Directorio de Clientes
             </h1>
-            <p className="text-muted-foreground mt-1">Manage your customer relationships and contacts.</p>
+            <p className="text-muted-foreground mt-1">Gestiona tus relaciones comerciales y contactos.</p>
           </div>
           
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="hover-elevate shadow-md shadow-primary/20 gap-2">
-                <Plus className="h-4 w-4" /> New Client
+                <Plus className="h-4 w-4" /> Nuevo Cliente
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Add New Client</DialogTitle>
+                <DialogTitle>Agregar Nuevo Cliente</DialogTitle>
               </DialogHeader>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
                   <FormField control={form.control} name="name" render={({ field }) => (
-                    <FormItem><FormLabel>Full Name</FormLabel><FormControl><Input placeholder="John Doe" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Nombre Completo</FormLabel><FormControl><Input placeholder="Juan Pérez" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                   <FormField control={form.control} name="company" render={({ field }) => (
-                    <FormItem><FormLabel>Company</FormLabel><FormControl><Input placeholder="Acme Inc" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Empresa</FormLabel><FormControl><Input placeholder="Empresa S.A." {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                   <div className="grid grid-cols-2 gap-4">
                     <FormField control={form.control} name="email" render={({ field }) => (
-                      <FormItem><FormLabel>Email</FormLabel><FormControl><Input placeholder="john@acme.com" {...field} /></FormControl><FormMessage /></FormItem>
+                      <FormItem><FormLabel>Correo</FormLabel><FormControl><Input placeholder="juan@empresa.com" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                     <FormField control={form.control} name="phone" render={({ field }) => (
-                      <FormItem><FormLabel>Phone</FormLabel><FormControl><Input placeholder="555-0123" {...field} /></FormControl><FormMessage /></FormItem>
+                      <FormItem><FormLabel>Teléfono</FormLabel><FormControl><Input placeholder="55-1234-5678" {...field} /></FormControl><FormMessage /></FormItem>
                     )} />
                   </div>
                   <div className="pt-2 flex justify-end">
                     <Button type="submit" disabled={createClient.isPending} className="w-full sm:w-auto">
-                      {createClient.isPending ? "Creating..." : "Create Client"}
+                      {createClient.isPending ? "Creando..." : "Crear Cliente"}
                     </Button>
                   </div>
                 </form>
@@ -111,12 +112,12 @@ export default function Clients() {
           <CardHeader className="border-b border-border/50 bg-secondary/10 px-6 py-4 flex flex-row items-center justify-between space-y-0">
             <CardTitle className="text-lg font-medium flex items-center gap-2">
               <Building className="h-5 w-5 text-muted-foreground" />
-              All Clients
+              Todos los Clientes
             </CardTitle>
             <div className="relative w-72">
               <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input 
-                placeholder="Search clients..." 
+                placeholder="Buscar clientes..." 
                 className="pl-9 h-9 bg-background"
                 value={search}
                 onChange={(e) => {
@@ -130,11 +131,11 @@ export default function Clients() {
             <Table>
               <TableHeader className="bg-secondary/20">
                 <TableRow className="hover:bg-transparent">
-                  <TableHead className="pl-6">Name</TableHead>
-                  <TableHead>Company</TableHead>
-                  <TableHead>Contact</TableHead>
-                  <TableHead>Added</TableHead>
-                  <TableHead className="text-right pr-6">Action</TableHead>
+                  <TableHead className="pl-6">Nombre</TableHead>
+                  <TableHead>Empresa</TableHead>
+                  <TableHead>Contacto</TableHead>
+                  <TableHead>Agregado</TableHead>
+                  <TableHead className="text-right pr-6">Acción</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -151,7 +152,7 @@ export default function Clients() {
                 ) : data?.data.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} className="h-32 text-center text-muted-foreground">
-                      No clients found.
+                      No se encontraron clientes.
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -177,7 +178,7 @@ export default function Clients() {
                         </div>
                       </TableCell>
                       <TableCell className="text-muted-foreground text-sm">
-                        {format(new Date(client.createdAt), 'MMM d, yyyy')}
+                        {format(new Date(client.createdAt), "d 'de' MMM, yyyy", { locale: es })}
                       </TableCell>
                       <TableCell className="text-right pr-6">
                         <Dialog>
@@ -202,14 +203,14 @@ export default function Clients() {
                             </DialogHeader>
                             <div className="space-y-6 pt-4">
                               <div>
-                                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Contact Information</h4>
+                                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Información de Contacto</h4>
                                 <div className="space-y-3 bg-secondary/20 p-4 rounded-lg border border-border/50">
                                   <div className="flex items-center gap-3">
                                     <div className="p-2 bg-background rounded-md border border-border">
                                       <Mail className="h-4 w-4 text-primary" />
                                     </div>
                                     <div>
-                                      <p className="text-xs text-muted-foreground">Email Address</p>
+                                      <p className="text-xs text-muted-foreground">Correo Electrónico</p>
                                       <p className="text-sm font-medium">{client.email}</p>
                                     </div>
                                   </div>
@@ -218,16 +219,16 @@ export default function Clients() {
                                       <Phone className="h-4 w-4 text-primary" />
                                     </div>
                                     <div>
-                                      <p className="text-xs text-muted-foreground">Phone Number</p>
+                                      <p className="text-xs text-muted-foreground">Número de Teléfono</p>
                                       <p className="text-sm font-medium">{client.phone}</p>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                               <div>
-                                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">System Info</h4>
+                                <h4 className="text-sm font-semibold text-foreground mb-3 uppercase tracking-wider">Información del Sistema</h4>
                                 <div className="flex items-center gap-3 text-sm text-muted-foreground bg-secondary/20 p-4 rounded-lg border border-border/50">
-                                  <Calendar className="h-4 w-4" /> Added on {format(new Date(client.createdAt), 'MMMM d, yyyy')}
+                                  <Calendar className="h-4 w-4" /> Registrado el {format(new Date(client.createdAt), "d 'de' MMMM 'de' yyyy", { locale: es })}
                                 </div>
                               </div>
                             </div>
@@ -246,15 +247,15 @@ export default function Clients() {
                   <PaginationContent>
                     <PaginationItem>
                       <Button variant="outline" size="sm" onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}>
-                        Previous
+                        Anterior
                       </Button>
                     </PaginationItem>
                     <PaginationItem className="px-4 text-sm text-muted-foreground">
-                      Page {page} of {Math.ceil(data.total / data.pageSize)}
+                      Página {page} de {Math.ceil(data.total / data.pageSize)}
                     </PaginationItem>
                     <PaginationItem>
                       <Button variant="outline" size="sm" onClick={() => setPage(p => p + 1)} disabled={page >= Math.ceil(data.total / data.pageSize)}>
-                        Next
+                        Siguiente
                       </Button>
                     </PaginationItem>
                   </PaginationContent>

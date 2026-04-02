@@ -14,11 +14,12 @@ import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Badge } from "@/components/ui/badge";
 
 const formSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  description: z.string().min(10, "Description is required"),
-  estimatedPrice: z.coerce.number().min(0, "Price is required"),
+  name: z.string().min(2, "El nombre es requerido"),
+  description: z.string().min(10, "La descripción es requerida"),
+  estimatedPrice: z.coerce.number().min(0, "El precio es requerido"),
 });
 
 export default function Services() {
@@ -37,13 +38,13 @@ export default function Services() {
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     createService.mutate({ data: values }, {
       onSuccess: () => {
-        toast({ title: "Success", description: "Service catalog updated" });
+        toast({ title: "Éxito", description: "Catálogo de servicios actualizado" });
         setIsDialogOpen(false);
         form.reset();
         queryClient.invalidateQueries({ queryKey: getListServicesQueryKey() });
       },
       onError: () => {
-        toast({ title: "Error", description: "Failed to add service", variant: "destructive" });
+        toast({ title: "Error", description: "No se pudo agregar el servicio", variant: "destructive" });
       }
     });
   };
@@ -55,38 +56,38 @@ export default function Services() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
               <Boxes className="h-8 w-8 text-primary" />
-              Service Catalog
+              Catálogo de Servicios
             </h1>
-            <p className="text-muted-foreground mt-1">Manage offerings and pricing parameters.</p>
+            <p className="text-muted-foreground mt-1">Gestiona las ofertas y parámetros de precios.</p>
           </div>
           
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
               <Button className="hover-elevate shadow-md shadow-primary/20 gap-2">
-                <Plus className="h-4 w-4" /> Add Service
+                <Plus className="h-4 w-4" /> Agregar Servicio
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Add New Service</DialogTitle>
+                <DialogTitle>Agregar Nuevo Servicio</DialogTitle>
               </DialogHeader>
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 pt-4">
                   <FormField control={form.control} name="name" render={({ field }) => (
-                    <FormItem><FormLabel>Service Name</FormLabel><FormControl><Input placeholder="SEO Audit" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Nombre del Servicio</FormLabel><FormControl><Input placeholder="Auditoría SEO" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                   
                   <FormField control={form.control} name="description" render={({ field }) => (
-                    <FormItem><FormLabel>Description</FormLabel><FormControl><Textarea placeholder="Detailed analysis of..." className="resize-none h-24" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Descripción</FormLabel><FormControl><Textarea placeholder="Análisis detallado de..." className="resize-none h-24" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
                   
                   <FormField control={form.control} name="estimatedPrice" render={({ field }) => (
-                    <FormItem><FormLabel>Base Price ($)</FormLabel><FormControl><Input type="number" placeholder="1500" {...field} /></FormControl><FormMessage /></FormItem>
+                    <FormItem><FormLabel>Precio Base ($)</FormLabel><FormControl><Input type="number" placeholder="1500" {...field} /></FormControl><FormMessage /></FormItem>
                   )} />
 
                   <div className="pt-4 flex justify-end">
                     <Button type="submit" disabled={createService.isPending} className="w-full">
-                      {createService.isPending ? "Saving..." : "Save Service"}
+                      {createService.isPending ? "Guardando..." : "Guardar Servicio"}
                     </Button>
                   </div>
                 </form>
@@ -102,9 +103,9 @@ export default function Services() {
         ) : data?.length === 0 ? (
           <div className="text-center p-16 border border-border/50 border-dashed rounded-xl bg-card/50">
             <Boxes className="h-16 w-16 text-muted-foreground mx-auto mb-4 opacity-50" />
-            <h3 className="text-xl font-medium text-foreground mb-2">No services defined</h3>
-            <p className="text-muted-foreground mb-6">Build your catalog to start attaching services to projects.</p>
-            <Button onClick={() => setIsDialogOpen(true)} variant="outline">Add First Service</Button>
+            <h3 className="text-xl font-medium text-foreground mb-2">Sin servicios definidos</h3>
+            <p className="text-muted-foreground mb-6">Construye tu catálogo para comenzar a vincular servicios con proyectos.</p>
+            <Button onClick={() => setIsDialogOpen(true)} variant="outline">Agregar Primer Servicio</Button>
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
@@ -125,7 +126,7 @@ export default function Services() {
                   <p className="line-clamp-3">{service.description}</p>
                 </CardContent>
                 <CardFooter className="pt-4 border-t border-border/50 bg-secondary/10 mt-auto flex justify-between items-center">
-                  <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Base Price</span>
+                  <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Precio Base</span>
                   <span className="text-lg font-bold text-foreground flex items-center">
                     <DollarSign className="h-4 w-4 mr-0.5 text-primary" />
                     {service.estimatedPrice.toLocaleString()}

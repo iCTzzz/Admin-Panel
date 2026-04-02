@@ -16,15 +16,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { name: "Dashboard", href: "/", icon: LayoutDashboard },
-    { name: "Clients", href: "/clients", icon: Users },
-    { name: "Projects", href: "/projects", icon: Briefcase },
-    { name: "Services", href: "/services", icon: Boxes },
-    { name: "Reports", href: "/reports", icon: BarChart2 },
+    { name: "Clientes", href: "/clients", icon: Users },
+    { name: "Proyectos", href: "/projects", icon: Briefcase },
+    { name: "Servicios", href: "/services", icon: Boxes },
+    { name: "Reportes", href: "/reports", icon: BarChart2 },
   ];
 
   return (
     <div className="flex h-screen bg-background overflow-hidden selection:bg-primary/20">
-      {/* Mobile sidebar backdrop */}
+      {/* Fondo del sidebar en mobile */}
       {isSidebarOpen && (
         <div 
           className="fixed inset-0 z-40 bg-black/50 lg:hidden"
@@ -75,19 +75,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <div className="p-4 border-t border-border">
           <div className="flex items-center gap-3 px-3 py-2 rounded-lg bg-secondary/50 border border-border/50">
             <Avatar className="h-9 w-9 border border-border">
-              <AvatarFallback className="bg-primary/20 text-primary">AJ</AvatarFallback>
+              <AvatarFallback className="bg-primary/20 text-primary">AU</AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="text-sm font-medium leading-none">Admin User</span>
+              <span className="text-sm font-medium leading-none">Admin Usuario</span>
               <span className="text-xs text-muted-foreground mt-1">admin@mbs.com</span>
             </div>
           </div>
         </div>
       </aside>
 
-      {/* Main Content */}
+      {/* Contenido principal */}
       <div className="flex flex-1 flex-col overflow-hidden">
-        {/* Top Navbar */}
+        {/* Barra superior */}
         <header className="flex h-16 shrink-0 items-center justify-between border-b border-border bg-card/80 backdrop-blur-md px-6 z-10">
           <div className="flex items-center gap-4 flex-1">
             <Button variant="ghost" size="icon" className="lg:hidden" onClick={() => setIsSidebarOpen(true)}>
@@ -98,7 +98,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />
               <Input 
                 type="search" 
-                placeholder="Search across modules..." 
+                placeholder="Buscar en módulos..." 
                 className="w-full pl-9 bg-secondary/50 border-border/50 focus-visible:ring-primary focus-visible:bg-secondary transition-all"
               />
             </div>
@@ -114,26 +114,26 @@ export function Layout({ children }: { children: React.ReactNode }) {
               <DropdownMenuTrigger asChild>
                 <Button variant="ghost" size="icon" className="rounded-full">
                   <Avatar className="h-8 w-8 border border-border hover:ring-2 hover:ring-primary hover:ring-offset-2 hover:ring-offset-background transition-all">
-                    <AvatarFallback className="bg-primary/20 text-primary">AJ</AvatarFallback>
+                    <AvatarFallback className="bg-primary/20 text-primary">AU</AvatarFallback>
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 mt-1 border-border shadow-xl">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="cursor-pointer">Profile Settings</DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">System Preferences</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">Configuración de Perfil</DropdownMenuItem>
+                <DropdownMenuItem className="cursor-pointer">Preferencias del Sistema</DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className="text-destructive cursor-pointer focus:bg-destructive/10 focus:text-destructive">
                   <LogOut className="mr-2 h-4 w-4" />
-                  Log out
+                  Cerrar Sesión
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
         </header>
 
-        {/* Page Content */}
+        {/* Contenido de la página */}
         <main className="flex-1 overflow-y-auto p-6 md:p-8 scroll-smooth">
           <div className="mx-auto max-w-7xl h-full">
             {children}

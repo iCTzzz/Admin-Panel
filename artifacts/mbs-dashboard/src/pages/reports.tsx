@@ -5,6 +5,12 @@ import { BarChart2, TrendingUp, PieChart as PieChartIcon } from "lucide-react";
 import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend } from "recharts";
 import { Skeleton } from "@/components/ui/skeleton";
 
+const STATUS_LABELS: Record<string, string> = {
+  active: "Activo",
+  pending: "Pendiente",
+  completed: "Completado",
+};
+
 export default function Reports() {
   const { data: revenueData, isLoading: isLoadingRevenue } = useGetRevenueByMonth({ query: { queryKey: getGetRevenueByMonthQueryKey() } });
   const { data: statusData, isLoading: isLoadingStatus } = useGetProjectsByStatus({ query: { queryKey: getGetProjectsByStatusQueryKey() } });
@@ -23,22 +29,22 @@ export default function Reports() {
         <div className="border-b border-border/50 pb-6">
           <h1 className="text-3xl font-bold tracking-tight flex items-center gap-3">
             <BarChart2 className="h-8 w-8 text-primary" />
-            Analytics & Reports
+            Análisis y Reportes
           </h1>
-          <p className="text-muted-foreground mt-1">Deep dive into financial and operational metrics.</p>
+          <p className="text-muted-foreground mt-1">Análisis detallado de métricas financieras y operativas.</p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2">
-          {/* Revenue Chart */}
+          {/* Gráfica de ingresos */}
           <Card className="border-border/50 shadow-sm col-span-2">
             <CardHeader className="border-b border-border/50 bg-secondary/10">
               <div className="flex items-center justify-between">
                 <div>
                   <CardTitle className="flex items-center gap-2">
                     <TrendingUp className="h-5 w-5 text-primary" />
-                    Revenue Trend
+                    Tendencia de Ingresos
                   </CardTitle>
-                  <CardDescription className="mt-1">Estimated revenue from projects over the last 6 months</CardDescription>
+                  <CardDescription className="mt-1">Ingresos estimados de proyectos en los últimos 6 meses</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -65,7 +71,7 @@ export default function Reports() {
                     <Tooltip 
                       cursor={{ stroke: 'hsl(var(--muted))', strokeWidth: 2 }} 
                       contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
-                      formatter={(value: number) => [formatCurrency(value), 'Revenue']}
+                      formatter={(value: number) => [formatCurrency(value), 'Ingresos']}
                     />
                     <Line 
                       type="monotone" 
@@ -78,19 +84,19 @@ export default function Reports() {
                   </LineChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="flex h-full items-center justify-center text-muted-foreground">No data available</div>
+                <div className="flex h-full items-center justify-center text-muted-foreground">Sin datos disponibles</div>
               )}
             </CardContent>
           </Card>
 
-          {/* Status Distribution */}
+          {/* Distribución por estado */}
           <Card className="border-border/50 shadow-sm">
             <CardHeader className="border-b border-border/50 bg-secondary/10">
               <CardTitle className="flex items-center gap-2">
                 <PieChartIcon className="h-5 w-5 text-primary" />
-                Project Pipeline
+                Pipeline de Proyectos
               </CardTitle>
-              <CardDescription className="mt-1">Distribution of projects by current status</CardDescription>
+              <CardDescription className="mt-1">Distribución de proyectos por estado actual</CardDescription>
             </CardHeader>
             <CardContent className="pt-6 min-h-[300px] flex items-center justify-center">
               {isLoadingStatus ? (
@@ -115,50 +121,55 @@ export default function Reports() {
                     <Tooltip 
                       contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
                       itemStyle={{ color: 'hsl(var(--foreground))' }}
-                      formatter={(value: number) => [value, 'Projects']}
+                      formatter={(value: number, name: string) => [value, STATUS_LABELS[name] ?? name]}
                     />
                     <Legend 
                       verticalAlign="bottom" 
                       height={36} 
                       iconType="circle"
-                      formatter={(value) => <span className="capitalize text-foreground">{value}</span>}
+                      formatter={(value) => <span className="text-foreground">{STATUS_LABELS[value] ?? value}</span>}
                     />
                   </PieChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="text-muted-foreground">No data available</div>
+                <div className="text-muted-foreground">Sin datos disponibles</div>
               )}
             </CardContent>
           </Card>
 
-          {/* Status Bar Chart alternative */}
+          {/* Gráfica de barras por estado */}
           <Card className="border-border/50 shadow-sm">
             <CardHeader className="border-b border-border/50 bg-secondary/10">
               <CardTitle className="flex items-center gap-2">
                 <BarChart2 className="h-5 w-5 text-primary" />
-                Status Volume
+                Volumen por Estado
               </CardTitle>
-              <CardDescription className="mt-1">Absolute count of projects by status</CardDescription>
+              <CardDescription className="mt-1">Conteo absoluto de proyectos por estado</CardDescription>
             </CardHeader>
             <CardContent className="pt-6 min-h-[300px]">
               {isLoadingStatus ? (
                 <Skeleton className="h-full w-full rounded-xl bg-secondary/50" />
               ) : statusData && statusData.length > 0 ? (
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={statusData} layout="vertical" margin={{ top: 5, right: 30, left: 20, bottom: 5 }}>
+                  <BarChart
+                    data={statusData.map(d => ({ ...d, label: STATUS_LABELS[d.status] ?? d.status }))}
+                    layout="vertical"
+                    margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+                  >
                     <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={false} stroke="hsl(var(--border))" />
                     <XAxis type="number" axisLine={false} tickLine={false} tick={{ fill: 'hsl(var(--muted-foreground))' }} />
                     <YAxis 
                       type="category" 
-                      dataKey="status" 
+                      dataKey="label" 
                       axisLine={false} 
                       tickLine={false} 
-                      tick={{ fill: 'hsl(var(--foreground))', textTransform: 'capitalize' }} 
-                      width={80}
+                      tick={{ fill: 'hsl(var(--foreground))' }} 
+                      width={90}
                     />
                     <Tooltip 
                       cursor={{ fill: 'hsl(var(--secondary))' }} 
                       contentStyle={{ backgroundColor: 'hsl(var(--card))', borderColor: 'hsl(var(--border))', borderRadius: '8px' }}
+                      formatter={(value: number) => [value, 'Proyectos']}
                     />
                     <Bar dataKey="count" radius={[0, 4, 4, 0]} barSize={40}>
                       {statusData.map((entry, index) => (
@@ -168,7 +179,7 @@ export default function Reports() {
                   </BarChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="flex h-full items-center justify-center text-muted-foreground">No data available</div>
+                <div className="flex h-full items-center justify-center text-muted-foreground">Sin datos disponibles</div>
               )}
             </CardContent>
           </Card>
