@@ -15,7 +15,8 @@ export default function Reports() {
   const { data: revenueData, isLoading: isLoadingRevenue } = useGetRevenueByMonth({ query: { queryKey: getGetRevenueByMonthQueryKey() } });
   const { data: statusData, isLoading: isLoadingStatus } = useGetProjectsByStatus({ query: { queryKey: getGetProjectsByStatusQueryKey() } });
 
-  const formatCurrency = (value: number) => `$${value.toLocaleString()}`;
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(value);
   
   const COLORS = {
     active: 'hsl(var(--primary))',
@@ -66,7 +67,7 @@ export default function Reports() {
                       axisLine={false} 
                       tickLine={false} 
                       tick={{ fill: 'hsl(var(--muted-foreground))', fontSize: 12 }} 
-                      tickFormatter={(value) => `$${value/1000}k`}
+                      tickFormatter={(value) => `$${(value/1000).toFixed(0)}k`}
                     />
                     <Tooltip 
                       cursor={{ stroke: 'hsl(var(--muted))', strokeWidth: 2 }} 

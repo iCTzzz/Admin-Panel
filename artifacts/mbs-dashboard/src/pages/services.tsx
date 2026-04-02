@@ -127,9 +127,8 @@ export default function Services() {
                 </CardContent>
                 <CardFooter className="pt-4 border-t border-border/50 bg-secondary/10 mt-auto flex justify-between items-center">
                   <span className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Precio Base</span>
-                  <span className="text-lg font-bold text-foreground flex items-center">
-                    <DollarSign className="h-4 w-4 mr-0.5 text-primary" />
-                    {service.estimatedPrice.toLocaleString()}
+                  <span className="text-lg font-bold text-foreground">
+                    {new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(service.estimatedPrice)}
                   </span>
                 </CardFooter>
               </Card>

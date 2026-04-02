@@ -234,7 +234,7 @@ export default function Projects() {
                     </div>
                     <div>
                       <p className="text-muted-foreground text-xs uppercase tracking-wider mb-1">Valor</p>
-                      <p className="font-medium flex items-center"><DollarSign className="h-3 w-3 mr-1 text-primary" /> {project.estimatedRevenue.toLocaleString()}</p>
+                      <p className="font-medium flex items-center text-xs"><DollarSign className="h-3 w-3 mr-1 text-primary shrink-0" /> {new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(project.estimatedRevenue)}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -270,8 +270,8 @@ export default function Projects() {
                     <TableCell className="text-muted-foreground text-sm">
                       {format(new Date(project.startDate), "d 'de' MMM, yyyy", { locale: es })}
                     </TableCell>
-                    <TableCell className="text-right font-medium">
-                      ${project.estimatedRevenue.toLocaleString()}
+                    <TableCell className="text-right font-medium text-sm">
+                      {new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(project.estimatedRevenue)}
                     </TableCell>
                     <TableCell className="text-right pr-6">
                       <Button variant="ghost" size="icon" className="opacity-0 group-hover:opacity-100 transition-opacity h-8 w-8">

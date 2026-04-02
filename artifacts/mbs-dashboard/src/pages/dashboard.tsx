@@ -14,7 +14,7 @@ export default function Dashboard() {
   const { data: recentActivity, isLoading: isLoadingActivity } = useGetRecentActivity({ query: { queryKey: getGetRecentActivityQueryKey() } });
 
   const formatCurrency = (val: number) => {
-    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(val);
+    return new Intl.NumberFormat('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 }).format(val);
   };
 
   const getActivityIcon = (type: string) => {
