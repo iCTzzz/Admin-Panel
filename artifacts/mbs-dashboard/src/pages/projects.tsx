@@ -69,9 +69,9 @@ export default function Projects() {
 
   const getStatusBadge = (status: string) => {
     switch(status) {
-      case 'completed': return <Badge className="bg-emerald-500/10 text-emerald-500 hover:bg-emerald-500/20 border-emerald-500/20">Completado</Badge>;
-      case 'active': return <Badge className="bg-blue-500/10 text-blue-500 hover:bg-blue-500/20 border-blue-500/20">Activo</Badge>;
-      case 'pending': return <Badge className="bg-amber-500/10 text-amber-500 hover:bg-amber-500/20 border-amber-500/20">Pendiente</Badge>;
+      case 'completed': return <Badge className="bg-foreground/10 text-foreground/90 hover:bg-foreground/15 border-foreground/20">Completado</Badge>;
+      case 'active': return <Badge className="bg-foreground/20 text-foreground hover:bg-foreground/25 border-foreground/30">Activo</Badge>;
+      case 'pending': return <Badge className="bg-foreground/5 text-muted-foreground hover:bg-foreground/10 border-foreground/10">Pendiente</Badge>;
       default: return <Badge variant="outline">{status}</Badge>;
     }
   };

@@ -113,8 +113,8 @@ export default function Services() {
               <Card key={service.id} className="hover-elevate border-border/50 shadow-sm flex flex-col group h-full">
                 <CardHeader className="pb-4">
                   <div className="flex justify-between items-start mb-2">
-                    <div className="p-2.5 bg-primary/10 rounded-lg shrink-0">
-                      <Tag className="h-5 w-5 text-primary" />
+                    <div className="p-2.5 bg-secondary rounded-lg border border-border/50 shrink-0">
+                      <Tag className="h-5 w-5 text-foreground/70" />
                     </div>
                     <Badge variant="outline" className="bg-secondary/50 font-mono text-xs">
                       ID-{service.id.toString().padStart(4, '0')}

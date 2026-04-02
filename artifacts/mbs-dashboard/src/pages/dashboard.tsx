@@ -19,11 +19,11 @@ export default function Dashboard() {
 
   const getActivityIcon = (type: string) => {
     switch(type) {
-      case 'client_added': return <Users className="h-4 w-4 text-blue-500" />;
-      case 'project_created': return <PlusCircle className="h-4 w-4 text-emerald-500" />;
-      case 'project_updated': return <PenTool className="h-4 w-4 text-amber-500" />;
-      case 'service_added': return <Boxes className="h-4 w-4 text-purple-500" />;
-      default: return <Activity className="h-4 w-4 text-gray-500" />;
+      case 'client_added': return <Users className="h-4 w-4 text-foreground/60" />;
+      case 'project_created': return <PlusCircle className="h-4 w-4 text-foreground/80" />;
+      case 'project_updated': return <PenTool className="h-4 w-4 text-foreground/60" />;
+      case 'service_added': return <Boxes className="h-4 w-4 text-foreground/70" />;
+      default: return <Activity className="h-4 w-4 text-muted-foreground" />;
     }
   };
 
@@ -47,27 +47,27 @@ export default function Dashboard() {
           ) : (
             <>
               <Card className="hover-elevate border-border/50 shadow-sm overflow-hidden relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative z-10">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Total de Clientes</CardTitle>
-                  <div className="p-2 bg-blue-500/10 rounded-lg">
-                    <Users className="h-4 w-4 text-blue-500" />
+                  <div className="p-2 bg-secondary rounded-lg border border-border/50">
+                    <Users className="h-4 w-4 text-foreground/70" />
                   </div>
                 </CardHeader>
                 <CardContent className="relative z-10">
                   <div className="text-3xl font-bold">{summary?.totalClients.toLocaleString()}</div>
                   <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
-                    <span className="text-emerald-500 flex items-center"><Activity className="h-3 w-3 mr-1" /> Activos</span>
+                    <span className="flex items-center"><Activity className="h-3 w-3 mr-1" /> Activos</span>
                   </p>
                 </CardContent>
               </Card>
 
               <Card className="hover-elevate border-border/50 shadow-sm overflow-hidden relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative z-10">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Proyectos Activos</CardTitle>
-                  <div className="p-2 bg-emerald-500/10 rounded-lg">
-                    <Briefcase className="h-4 w-4 text-emerald-500" />
+                  <div className="p-2 bg-secondary rounded-lg border border-border/50">
+                    <Briefcase className="h-4 w-4 text-foreground/70" />
                   </div>
                 </CardHeader>
                 <CardContent className="relative z-10">
@@ -77,11 +77,11 @@ export default function Dashboard() {
               </Card>
 
               <Card className="hover-elevate border-border/50 shadow-sm overflow-hidden relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-amber-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative z-10">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Proyectos Completados</CardTitle>
-                  <div className="p-2 bg-amber-500/10 rounded-lg">
-                    <CheckCircle2 className="h-4 w-4 text-amber-500" />
+                  <div className="p-2 bg-secondary rounded-lg border border-border/50">
+                    <CheckCircle2 className="h-4 w-4 text-foreground/70" />
                   </div>
                 </CardHeader>
                 <CardContent className="relative z-10">
@@ -91,11 +91,11 @@ export default function Dashboard() {
               </Card>
 
               <Card className="hover-elevate border-border/50 shadow-sm overflow-hidden relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                 <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0 relative z-10">
                   <CardTitle className="text-sm font-medium text-muted-foreground">Ingresos Estimados</CardTitle>
-                  <div className="p-2 bg-purple-500/10 rounded-lg">
-                    <DollarSign className="h-4 w-4 text-purple-500" />
+                  <div className="p-2 bg-secondary rounded-lg border border-border/50">
+                    <DollarSign className="h-4 w-4 text-foreground/70" />
                   </div>
                 </CardHeader>
                 <CardContent className="relative z-10">
