@@ -1,0 +1,124 @@
+Crea una aplicación web tipo dashboard administrativo profesional para "MBS", una empresa que gestiona clientes, proyectos y servicios. El sistema debe permitir consultar, visualizar y filtrar información desde una base de datos (simulada o real), con una interfaz moderna, clara y altamente usable.
+
+El proyecto debe reflejar buenas prácticas de desarrollo, diseño limpio y estructura escalable, ya que será utilizado como prueba técnica para evaluación profesional.
+
+🧠 OBJETIVO DEL SISTEMA
+
+Desarrollar un panel donde el usuario pueda:
+
+Consultar registros desde una base de datos
+Buscar información en tiempo real
+Filtrar datos dinámicamente
+Visualizar métricas clave del negocio
+Navegar entre módulos de forma intuitiva
+🎨 DISEÑO Y ESTÉTICA
+Estilo moderno tipo SaaS (similar a dashboards empresariales)
+Paleta de colores:
+Fondo principal: #0F172A
+Tarjetas: #111827
+Acento: #3B82F6
+Texto: blanco / gris claro
+Tipografía: Inter o Poppins
+UI basada en cards
+Bordes redondeados (8px–12px)
+Sombras sutiles
+Espaciado consistente (sistema de 8px)
+Modo oscuro por defecto
+🧱 LAYOUT PRINCIPAL
+Sidebar (izquierda, fijo)
+Nombre: MBS Dashboard
+Menú:
+Dashboard
+Clientes
+Proyectos
+Servicios
+Reportes
+Iconos modernos (lucide-react o similar)
+Estado activo resaltado
+Navbar superior
+Buscador global funcional
+Avatar de usuario con dropdown
+Indicador de notificaciones (opcional)
+Área principal
+Contenido dinámico según la sección seleccionada
+📊 DASHBOARD (HOME)
+Cards con métricas clave:
+Total de clientes
+Proyectos activos
+Ingresos estimados
+Proyectos completados
+Gráfica (usar recharts):
+Proyectos por mes
+Actividad reciente:
+Últimos registros agregados
+📂 MÓDULO: CLIENTES
+Tabla profesional con:
+Nombre
+Email
+Teléfono
+Empresa
+Funcionalidades:
+Búsqueda en tiempo real
+Filtros dinámicos
+Paginación
+Acción:
+Botón "Ver detalle"
+Modal con información completa
+🎬 MÓDULO: PROYECTOS
+Tabla o cards:
+Nombre del proyecto
+Cliente
+Estado (Activo, Pendiente, Finalizado)
+Fecha
+Filtros por estado
+Badges de estado con colores:
+Verde: completado
+Amarillo: pendiente
+Azul: activo
+Vista de detalle
+🧾 MÓDULO: SERVICIOS
+Lista de servicios ofrecidos:
+Nombre
+Descripción
+Precio estimado
+Diseño en cards o tabla
+📈 MÓDULO: REPORTES
+Gráficas básicas:
+Ingresos por mes
+Proyectos por estado
+Uso de librería como recharts
+Visualización clara y minimalista
+🔍 FUNCIONALIDADES CLAVE
+Búsqueda global funcional
+Filtros en tablas
+Componentes reutilizables
+Manejo de estado (useState / React Query opcional)
+Simulación de API (JSON o mock)
+Código modular y limpio
+⚙️ CARACTERÍSTICAS TÉCNICAS
+React + Vite
+Tailwind CSS
+Componentes reutilizables
+Arquitectura por carpetas (components, pages, services)
+Lazy loading de módulos
+Buen manejo de estados
+Código legible y escalable
+📱 RESPONSIVE
+Sidebar colapsable en mobile
+Tablas adaptables
+Navegación usable en dispositivos pequeños
+🎯 OBJETIVO FINAL
+
+El sistema debe parecer una herramienta real utilizada por una empresa:
+
+Profesional
+Intuitivo
+Visualmente limpio
+Funcional
+
+Debe demostrar:
+
+Dominio de React
+Buenas prácticas de UI/UX
+Capacidad de estructurar proyectos reales
+Pensamiento orientado a producto
